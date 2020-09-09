@@ -2,12 +2,19 @@ package com.isdma.workshopmongo.domain;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+//para dizer que user corresponde a uma coleçºao la no mongodb usamos esta anotação aqui na minha classe de dominio
+@Document(collection = "user") // se nao meter (collection = "user") dá igual, ele pega no nome da classe que é User e coloca em letra pequena user criando a coleçao com esse nome
 public class User implements Serializable {//dados transfomados em bytes para trafegar na rede ou gravado em arquivo
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@Id
 	private String id;
 	private String name;
 	private String email;
