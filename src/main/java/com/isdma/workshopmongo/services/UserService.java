@@ -1,12 +1,14 @@
 package com.isdma.workshopmongo.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isdma.workshopmongo.domain.User;
 import com.isdma.workshopmongo.repository.UserRepository;
+import com.isdma.workshopmongo.services.exception.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -22,4 +24,10 @@ public class UserService {
 		return repo.findAll(); //e assim posso chamar imensas operações na bd
 	}
 
+	public User findById(String id) {
+		Optional<User> user = repo.findById(id);
+		
+		return user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado")); //SE O VALOR ESTIVER PRESENTE RETORNA SENAO LANÇA O QUE QUISERMOS
+	}
+	
 }

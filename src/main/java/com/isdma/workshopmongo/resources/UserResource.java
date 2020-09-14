@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +35,12 @@ public class UserResource {
 		return ResponseEntity.ok().body(listDto);
 				//ok metodo que instancia ResponseEntity ja com resposta de sucesso que ocorreu com sucesso a repsosta e no corpo da mensagem coloco a nossa list com o body
 	}
-
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET) //podia meter so GetMapping
+	public ResponseEntity<UserDTO> findById(@PathVariable String id){//para saber que vou bucar o id à requisição uso o PathVariable
+		
+		User obj = service.findById(id);
+	
+		return ResponseEntity.ok().body(new UserDTO(obj));
+	}
 }
