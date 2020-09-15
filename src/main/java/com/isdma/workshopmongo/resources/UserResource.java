@@ -70,4 +70,16 @@ public class UserResource {
 	}
 	
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id){
+		
+		User obj = service.fromDTO(objDto); //converto primeito o userdto para user
+		
+		obj.setId(id);//garantir que fica com id da requisição
+		obj = service.update(obj);
+ 	
+		return ResponseEntity.noContent().build();
+	}
+	
+	
 }
