@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.isdma.workshopmongo.domain.Post;
 import com.isdma.workshopmongo.domain.User;
 import com.isdma.workshopmongo.dto.UserDTO;
 import com.isdma.workshopmongo.services.UserService;
@@ -79,6 +80,16 @@ public class UserResource {
 		obj = service.update(obj);
  	
 		return ResponseEntity.noContent().build();
+	}
+	
+	
+	//buscar os posts de um user
+	@RequestMapping(value = "/{id}/posts", method = RequestMethod.GET) //podia meter so GetMapping
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id){//para saber que vou bucar o id à requisição uso o PathVariable
+		
+		User obj = service.findById(id);
+	
+		return ResponseEntity.ok().body(obj.getPosts());
 	}
 	
 	
