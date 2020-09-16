@@ -1,12 +1,15 @@
 package com.isdma.workshopmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.isdma.workshopmongo.dto.AuthorDTO;
+import com.isdma.workshopmongo.dto.CommentDTO;
 
 @Document(collection = "post")
 public class Post implements Serializable{
@@ -19,6 +22,8 @@ public class Post implements Serializable{
 	private String body;
 	
 	private AuthorDTO author;// podia ser User mas neste caso queremos que sejam os DTO que sao feitos à nossa medida poupando uso desnecessario de dados que nao precisamos
+	
+	private List<CommentDTO> comments = new ArrayList<>();
 	
 	public Post() {
 		
@@ -73,6 +78,14 @@ public class Post implements Serializable{
 	public void setAuthor(AuthorDTO author) {
 		this.author = author;
 	}
+	
+	public List<CommentDTO> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<CommentDTO> comments) {
+		this.comments = comments;
+	}
 
 	@Override
 	public int hashCode() {
@@ -98,6 +111,10 @@ public class Post implements Serializable{
 			return false;
 		return true;
 	}
+
+	
+	
+	
 
 
 	
