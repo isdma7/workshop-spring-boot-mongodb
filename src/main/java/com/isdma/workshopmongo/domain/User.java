@@ -1,8 +1,11 @@
 package com.isdma.workshopmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 //para dizer que user corresponde a uma coleçºao la no mongodb usamos esta anotação aqui na minha classe de dominio
@@ -19,6 +22,11 @@ public class User implements Serializable {//dados transfomados em bytes para tr
 	private String name;
 	private String email;
 	
+	@DBRef(lazy = true) //lazy = true garante que os posts so sao carregados se eu explicitamente pedir, o DbRef da-nos no mongodb apenas as refs dos posts de cada user, tal como preferimos neste caso e nao aninhar os posts de cada user quando vamos buscar um
+	private List<Post> posts = new ArrayList<>();
+	
+	
+
 	public User() {
 		
 	}
@@ -52,6 +60,14 @@ public class User implements Serializable {//dados transfomados em bytes para tr
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
