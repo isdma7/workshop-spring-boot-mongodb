@@ -1,13 +1,17 @@
 package com.isdma.workshopmongo.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isdma.workshopmongo.domain.Post;
+import com.isdma.workshopmongo.resources.util.URL;
 import com.isdma.workshopmongo.services.PostService;
 
 @RestController
@@ -25,5 +29,19 @@ public class PostResource {
 		return ResponseEntity.ok().body(obj);
 		
 	}
+	
+	
+	//URL para pesquisar sera http://localhost:8081/posts/titlesearch?teta=m%20dia no postman
+	@RequestMapping(value = "/titlesearch", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value="teta", defaultValue = "") String text){ //para meu endpoint identificar o nome do paramentro que eu dei @RequestParam(value="text") que é text no caso, se valor nao for informado colocamos string vazia por defeito
+		text = URL.decodeParam(text);
+		
+		List<Post> list = service.findByTitle(text);
+	
+		return ResponseEntity.ok().body(list);
+		
+	}
+	
+	
 	
 }
