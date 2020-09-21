@@ -3,6 +3,7 @@ package com.isdma.workshopmongo.repository;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.isdma.workshopmongo.domain.Post;
@@ -15,5 +16,9 @@ public interface PostRepository extends MongoRepository<Post, String> {//eu faç
 	// querya especificas usamos a tabbela do spring que tem muitas para usar
 	List<Post> findByTitleContainingIgnoreCase(String text);
 	
+
+	//Fazemos agora o mesmo mas numa consulta personalizada feita por nos com json que é unico e usado neste caso pelo mongodb para qualquer linguagem que lhe aceda
+	@Query("{ 'title': { $regex: ?0, $options: 'i' } }")
+	List<Post> searchTitle(String text);
 	
 }
